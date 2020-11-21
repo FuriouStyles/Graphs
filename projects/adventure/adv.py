@@ -29,6 +29,27 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+start_room = []
+start_room.append(player.current_room.id)
+visited_rooms = set()
+
+while len(visited_rooms) != len(world.rooms):
+    current_room = start_room[-1]
+    visited_rooms.add(current_room)
+    cache = []
+    next_room = room_graph[current_room][1]
+    
+    for rooms in next_room.values():
+        if rooms not in visited_rooms:
+            cache.append(rooms)
+    if len(cache) > 0:
+        start_room.append(cache[0])
+    else:
+        start_room.pop()
+
+    for rooms in next_room.items():
+        if rooms[1] == start_room[-1]:
+            traversal_path.append(rooms[0])
 
 
 # TRAVERSAL TEST
